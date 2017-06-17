@@ -151,7 +151,7 @@
 
     function toggleAddresses() {
         showAddress = !showAddress;
-        $("td.address span").toggleClass("invisible");
+        $("td.address a").toggleClass("invisible");
     }
 
     function togglePublicKeys() {
@@ -161,7 +161,7 @@
 
     function togglePrivateKeys() {
         showPrivKey = !showPrivKey;
-        $("td.privkey span").toggleClass("invisible");
+        $("td.privkey a").toggleClass("invisible");
     }
 
     // Private methods
