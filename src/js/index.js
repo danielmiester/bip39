@@ -20,8 +20,11 @@
     DOM.passphrase = $(".passphrase");
     DOM.generate = $(".generate");
     DOM.rootKey = $(".root-key");
+    DOM.rootKeyQr = $("#root-key-qr");
     DOM.extendedPrivKey = $(".extended-priv-key");
     DOM.extendedPubKey = $(".extended-pub-key");
+    DOM.extendedPrivKeyQr = $("#extended-priv-key-qr");
+    DOM.extendedPubKeyQr = $("#extended-pub-key-qr");
     DOM.bip32tab = $("#bip32-tab");
     DOM.bip44tab = $("#bip44-tab");
     DOM.bip32panel = $("#bip32");
@@ -246,10 +249,16 @@
         // Display the key
         var rootKey = bip32RootKey.toBase58();
         DOM.rootKey.val(rootKey);
+        DOM.rootKeyQr.html("")
+        DOM.rootKeyQr.qrcode(rootKey);
         var extendedPrivKey = bip32ExtendedKey.toBase58();
         DOM.extendedPrivKey.val(extendedPrivKey);
+        DOM.extendedPrivKeyQr.html("")
+        DOM.extendedPrivKeyQr.qrcode(extendedPrivKey);
         var extendedPubKey = bip32ExtendedKey.toBase58(false);
         DOM.extendedPubKey.val(extendedPubKey);
+        DOM.extendedPubKeyQr.html("")
+        DOM.extendedPubKeyQr.qrcode(extendedPubKey);
         // Display the addresses and privkeys
         clearAddressesList();
         displayAddresses(0, 20);
@@ -349,15 +358,17 @@
         var row = $(addressRowTemplate.html());
         // Elements
         var indexCell = row.find(".index span");
-        var addressCell = row.find(".address span");
+        var addressCell = row.find(".address a");
         var pubkeyCell = row.find(".pubkey span");
-        var privkeyCell = row.find(".privkey span");
+        var privkeyCell = row.find(".privkey a");
         // Content
         var indexText = derivationPath + "/" + index;
         indexCell.text(indexText);
         addressCell.text(address);
-        pubkeyCell.text(pubkey)
+        addressCell.on("click",createQR);
+        pubkeyCell.text(pubkey);
         privkeyCell.text(privkey);
+        privkeyCell.on("click",createQR)
         // Visibility
         if (!showIndex) {
             indexCell.addClass("invisible");
@@ -371,9 +382,23 @@
         if (!showPrivKey) {
             privkeyCell.addClass("invisible");
         }
+
         DOM.addresses.append(row);
     }
+    function createQR(event){
+        var target = event.target;
+        var address = target.innerText;
+        var parent = target.parentNode;
+        if($("#"+address).length){
+            $("#"+address).remove()
+        }else {
+            var div = $("<div/>")
 
+            div.attr("id",address);
+            div.qrcode(address);
+            div.appendTo(parent)
+        }
+    }
     function hasStrongRandom() {
         return 'crypto' in window && window['crypto'] !== null;
     }
