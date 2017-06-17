@@ -29,7 +29,7 @@ import private keys into a wallet or supply someone with a list of addresses.
 Click the addresses or private keys to toggle view of a QR code of same address.
 
 Click the Show QR buttons by the root key and extended public and private keys to show a qr code sutible 
-for importing into a wallet on a mobile device. 
+for importing into a wallet on a mobile device.git co 
 
 The BIP32 keys can be used at [bip32.org](https://bip32.org) if desired.
 
