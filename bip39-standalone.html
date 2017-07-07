@@ -14013,6 +14013,17 @@ bitcoin.networks.denarius = {
     wif: 158,
 }
 
+bitcoin.networks.pinkcoin = {
+    magicPrefix: '\x19Pinkcoin Signed Message:\n',
+    bip32: {
+      public: 0x0488b21e,
+      private: 0x0488ade4
+    },
+    pubKeyHash: 3,
+    scriptHash: 28,
+    wif: 131,
+}
+
 
 
 
@@ -16988,6 +16999,13 @@ j.getBCHDigit(j.G18);)c^=j.G18<<j.getBCHDigit(c)-j.getBCHDigit(j.G18);return a<<
             onSelect: function() {
                 network = bitcoin.networks.denarius;
                 DOM.bip44coin.val(116);
+            },
+        },
+        {
+            name: "Pinkcoin",
+            onSelect: function() {
+                network = bitcoin.networks.pinkcoin;
+                DOM.bip44coin.val(117);
             },
         },
     ]
