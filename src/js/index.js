@@ -359,7 +359,7 @@
         // Elements
         var indexCell = row.find(".index span");
         var addressCell = row.find(".address a");
-        var pubkeyCell = row.find(".pubkey span");
+        var pubkeyCell = row.find(".pubkey a");
         var privkeyCell = row.find(".privkey a");
         // Content
         var indexText = derivationPath + "/" + index;
@@ -367,8 +367,9 @@
         addressCell.text(address);
         addressCell.on("click",createQR);
         pubkeyCell.text(pubkey);
+        pubkeyCell.on("click",createQR);
         privkeyCell.text(privkey);
-        privkeyCell.on("click",createQR)
+        privkeyCell.on("click",createQR);
         // Visibility
         if (!showIndex) {
             indexCell.addClass("invisible");

@@ -426,7 +426,7 @@
             <tr>
                 <td class="index"><span></span></td>
                 <td class="address"><a href="javascript:;"></a></td>
-                <td class="pubkey"><span></span></td>
+                <td class="pubkey"><a href="javascript:;"></a></td>
                 <td class="privkey"><a href="javascript:;"></a></td>
             </tr>
         </script>
@@ -9865,7 +9865,7 @@ function Address (hash, version) {
   typeForce('Buffer', hash)
 
   assert.strictEqual(hash.length, 20, 'Invalid hash length')
-  //console.log("Hello", version)
+  //console.log("Hello", version) 
   //assert.strictEqual(version & 0xff, version, 'Invalid version byte')
   if (version<128) assert.strictEqual(version & 0xff, version, 'Invalid version byte')
   else assert.strictEqual(version & 0xffff, version, 'Invalid version byte')
@@ -11247,7 +11247,7 @@ module.exports = {
 // Dogecoin BIP32 is a proposed standard: https://bitcointalk.org/index.php?topic=409731
 
 var networks = {
-
+  
 }
 
 function estimateFee (type) {
@@ -13700,7 +13700,7 @@ bitcoin.networks.eth = {
     private: 0xffffffff
   },
   pubKeyHash: 0xff,
-  wif: 0xff,
+  wif: 0xff,  
   ethereum : true
 };
 
@@ -13710,7 +13710,7 @@ bitcoin.networks.etc = {
     private: 0xffffffff
   },
   pubKeyHash: 0xff,
-  wif: 0xff,
+  wif: 0xff,    
   ethereum : true
 };
 
@@ -13777,7 +13777,7 @@ bitcoin.networks.expanse = {
     private: 0xffffffff
   },
   pubKeyHash: 0xff,
-  wif: 0xff,
+  wif: 0xff,    
   ethereum : true
 };
 
@@ -14101,13 +14101,13 @@ var sjcl = {
 
   /** @namespace Key exchange functions.  Right now only SRP is implemented. */
   keyexchange: {},
-
+  
   /** @namespace Block cipher modes of operation. */
   mode: {},
 
   /** @namespace Miscellaneous.  HMAC and PBKDF2. */
   misc: {},
-
+  
   /**
    * @namespace Bit array encoders and decoders.
    *
@@ -14118,7 +14118,7 @@ var sjcl = {
    * the method names are "fromBits" and "toBits".
    */
   codec: {},
-
+  
   /** @namespace Exceptions. */
   exception: {
     /** @constructor Ciphertext is corrupt. */
@@ -14126,13 +14126,13 @@ var sjcl = {
       this.toString = function() { return "CORRUPT: "+this.message; };
       this.message = message;
     },
-
+    
     /** @constructor Invalid parameter. */
     invalid: function(message) {
       this.toString = function() { return "INVALID: "+this.message; };
       this.message = message;
     },
-
+    
     /** @constructor Bug or missing feature in SJCL. @constructor */
     bug: function(message) {
       this.toString = function() { return "BUG: "+this.message; };
@@ -14234,7 +14234,7 @@ sjcl.bitArray = {
     if (a1.length === 0 || a2.length === 0) {
       return a1.concat(a2);
     }
-
+    
     var last = a1[a1.length-1], shift = sjcl.bitArray.getPartial(last);
     if (shift === 32) {
       return a1.concat(a2);
@@ -14320,7 +14320,7 @@ sjcl.bitArray = {
   _shiftRight: function (a, shift, carry, out) {
     var i, last2=0, shift2;
     if (out === undefined) { out = []; }
-
+    
     for (; shift >= 32; shift -= 32) {
       out.push(carry);
       carry = 0;
@@ -14328,7 +14328,7 @@ sjcl.bitArray = {
     if (shift === 0) {
       return out.concat(a);
     }
-
+    
     for (i=0; i<a.length; i++) {
       out.push(carry | a[i]>>>shift);
       carry = a[i] << (32-shift);
@@ -14338,7 +14338,7 @@ sjcl.bitArray = {
     out.push(sjcl.bitArray.partial(shift+shift2 & 31, (shift + shift2 > 32) ? carry : out.pop(),1));
     return out;
   },
-
+  
   /** xor a block of 4 words together.
    * @private
    */
@@ -14370,7 +14370,7 @@ sjcl.bitArray = {
  * @author Mike Hamburg
  * @author Dan Boneh
  */
-
+ 
 /** @namespace UTF-8 strings */
 sjcl.codec.utf8String = {
   /** Convert from a bitArray to a UTF-8 string. */
@@ -14385,7 +14385,7 @@ sjcl.codec.utf8String = {
     }
     return decodeURIComponent(escape(out));
   },
-
+  
   /** Convert from a UTF-8 string to a bitArray. */
   toBits: function (str) {
     str = unescape(encodeURIComponent(str));
@@ -14487,7 +14487,7 @@ sjcl.hash.sha512.prototype = {
    * @constant
    */
   blockSize: 1024,
-
+   
   /**
    * Reset the hash state.
    * @return this
@@ -14498,7 +14498,7 @@ sjcl.hash.sha512.prototype = {
     this._length = 0;
     return this;
   },
-
+  
   /**
    * Input several words to the hash.
    * @param {bitArray|String} data the data to hash.
@@ -14516,7 +14516,7 @@ sjcl.hash.sha512.prototype = {
     }
     return this;
   },
-
+  
   /**
    * Complete hashing and output the hash value.
    * @return {bitArray} The hash value, an array of 16 big-endian words.
@@ -14811,12 +14811,12 @@ sjcl.misc.hmac = function (key, Hash) {
   if (key.length > bs) {
     key = Hash.hash(key);
   }
-
+  
   for (i=0; i<bs; i++) {
     exKey[0][i] = key[i]^0x36363636;
     exKey[1][i] = key[i]^0x5C5C5C5C;
   }
-
+  
   this._baseHash[0].update(exKey[0]);
   this._baseHash[1].update(exKey[1]);
   this._resultHash = new Hash(this._baseHash[0]);
@@ -14879,34 +14879,34 @@ sjcl.misc.hmac.prototype.digest = function () {
  */
 sjcl.misc.pbkdf2 = function (password, salt, count, length, Prff) {
   count = count || 1000;
-
+  
   if (length < 0 || count < 0) {
     throw sjcl.exception.invalid("invalid params to pbkdf2");
   }
-
+  
   if (typeof password === "string") {
     password = sjcl.codec.utf8String.toBits(password);
   }
-
+  
   if (typeof salt === "string") {
     salt = sjcl.codec.utf8String.toBits(salt);
   }
-
+  
   Prff = Prff || sjcl.misc.hmac;
-
+  
   var prf = new Prff(password),
       u, ui, i, j, k, out = [], b = sjcl.bitArray;
 
   for (k = 1; 32 * out.length < (length || 1); k++) {
     u = ui = prf.encrypt(b.concat(salt,[k]));
-
+    
     for (i=1; i<count; i++) {
       ui = prf.encrypt(ui);
       for (j=0; j<ui.length; j++) {
         u[j] ^= ui[j];
       }
     }
-
+    
     out = out.concat(u);
   }
 
@@ -14965,7 +14965,7 @@ sjcl.hash.sha256.prototype = {
    * @constant
    */
   blockSize: 512,
-
+   
   /**
    * Reset the hash state.
    * @return this
@@ -14976,7 +14976,7 @@ sjcl.hash.sha256.prototype = {
     this._length = 0;
     return this;
   },
-
+  
   /**
    * Input several words to the hash.
    * @param {bitArray|String} data the data to hash.
@@ -14994,7 +14994,7 @@ sjcl.hash.sha256.prototype = {
     }
     return this;
   },
-
+  
   /**
    * Complete hashing and output the hash value.
    * @return {bitArray} The hash value, an array of 8 big-endian words.
@@ -15004,12 +15004,12 @@ sjcl.hash.sha256.prototype = {
 
     // Round out and push the buffer
     b = sjcl.bitArray.concat(b, [sjcl.bitArray.partial(1,1)]);
-
+    
     // Round out the buffer to a multiple of 16 words, less the 2 length words.
     for (i = b.length + 2; i & 15; i++) {
       b.push(0);
     }
-
+    
     // append the length
     b.push(Math.floor(this._length / 0x100000000));
     b.push(this._length | 0);
@@ -15030,7 +15030,7 @@ sjcl.hash.sha256.prototype = {
   /*
   _init:[0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19],
   */
-
+  
   /**
    * The SHA-256 hash key, to be precomputed.
    * @private
@@ -15065,7 +15065,7 @@ sjcl.hash.sha256.prototype = {
           continue outer;
         }
       }
-
+      
       if (i<8) {
         this._init[i] = frac(Math.pow(prime, 1/2));
       }
@@ -15073,13 +15073,13 @@ sjcl.hash.sha256.prototype = {
       i++;
     }
   },
-
+  
   /**
    * Perform one cycle of SHA-256.
    * @param {bitArray} words one block of words.
    * @private
    */
-  _block:function (words) {
+  _block:function (words) {  
     var i, tmp, a, b,
       w = words.slice(0),
       h = this._h,
@@ -15107,13 +15107,13 @@ sjcl.hash.sha256.prototype = {
       } else {
         a   = w[(i+1 ) & 15];
         b   = w[(i+14) & 15];
-        tmp = w[i&15] = ((a>>>7  ^ a>>>18 ^ a>>>3  ^ a<<25 ^ a<<14) +
+        tmp = w[i&15] = ((a>>>7  ^ a>>>18 ^ a>>>3  ^ a<<25 ^ a<<14) + 
                          (b>>>17 ^ b>>>19 ^ b>>>10 ^ b<<15 ^ b<<13) +
                          w[i&15] + w[(i+9) & 15]) | 0;
       }
-
+      
       tmp = (tmp + h7 + (h4>>>6 ^ h4>>>11 ^ h4>>>25 ^ h4<<26 ^ h4<<21 ^ h4<<7) +  (h6 ^ h4&(h5^h6)) + k[i]); // | 0;
-
+      
       // shift register
       h7 = h6; h6 = h5; h5 = h4;
       h4 = h3 + tmp | 0;
@@ -15154,8 +15154,8 @@ sjcl.hash.sha256.prototype = {
   var PADDING = [6, 1536, 393216, 100663296];
   var SHIFT = [0, 8, 16, 24];
   var RC = [1, 0, 32898, 0, 32906, 2147483648, 2147516416, 2147483648, 32907, 0, 2147483649,
-            0, 2147516545, 2147483648, 32777, 2147483648, 138, 0, 136, 0, 2147516425, 0,
-            2147483658, 0, 2147516555, 0, 139, 2147483648, 32905, 2147483648, 32771,
+            0, 2147516545, 2147483648, 32777, 2147483648, 138, 0, 136, 0, 2147516425, 0, 
+            2147483658, 0, 2147516555, 0, 139, 2147483648, 32905, 2147483648, 32771, 
             2147483648, 32770, 2147483648, 128, 2147483648, 32778, 0, 2147483658, 2147483648,
             2147516545, 2147483648, 32896, 2147483648, 2147483649, 0, 2147516424, 2147483648];
   var BITS = [224, 256, 384, 512];
@@ -15245,9 +15245,9 @@ sjcl.hash.sha256.prototype = {
     if (notString && message.constructor == root.ArrayBuffer) {
       message = new Uint8Array(message);
     }
-    var length = message.length, blocks = this.blocks, byteCount = this.byteCount,
+    var length = message.length, blocks = this.blocks, byteCount = this.byteCount, 
         blockCount = this.blockCount, index = 0, s = this.s, i, code;
-
+    
     while (index < length) {
       if (this.reset) {
         this.reset = false;
@@ -15316,7 +15316,7 @@ sjcl.hash.sha256.prototype = {
   Keccak.prototype.toString = Keccak.prototype.hex = function () {
     this.finalize();
 
-    var blockCount = this.blockCount, s = this.s, outputBlocks = this.outputBlocks,
+    var blockCount = this.blockCount, s = this.s, outputBlocks = this.outputBlocks, 
         extraBytes = this.extraBytes, i = 0, j = 0;
     var hex = '', block;
     while (j < outputBlocks) {
@@ -15350,7 +15350,7 @@ sjcl.hash.sha256.prototype = {
   Keccak.prototype.buffer = function () {
     this.finalize();
 
-    var blockCount = this.blockCount, s = this.s, outputBlocks = this.outputBlocks,
+    var blockCount = this.blockCount, s = this.s, outputBlocks = this.outputBlocks, 
         extraBytes = this.extraBytes, i = 0, j = 0;
     var bytes = this.outputBits >> 3;
     var buffer;
@@ -15378,7 +15378,7 @@ sjcl.hash.sha256.prototype = {
   Keccak.prototype.digest = Keccak.prototype.array = function () {
     this.finalize();
 
-    var blockCount = this.blockCount, s = this.s, outputBlocks = this.outputBlocks,
+    var blockCount = this.blockCount, s = this.s, outputBlocks = this.outputBlocks, 
         extraBytes = this.extraBytes, i = 0, j = 0;
     var array = [], offset, block;
     while (j < outputBlocks) {
@@ -15411,9 +15411,9 @@ sjcl.hash.sha256.prototype = {
   };
 
   var f = function (s) {
-    var h, l, n, c0, c1, c2, c3, c4, c5, c6, c7, c8, c9,
-        b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15, b16, b17,
-        b18, b19, b20, b21, b22, b23, b24, b25, b26, b27, b28, b29, b30, b31, b32, b33,
+    var h, l, n, c0, c1, c2, c3, c4, c5, c6, c7, c8, c9, 
+        b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15, b16, b17, 
+        b18, b19, b20, b21, b22, b23, b24, b25, b26, b27, b28, b29, b30, b31, b32, b33, 
         b34, b35, b36, b37, b38, b39, b40, b41, b42, b43, b44, b45, b46, b47, b48, b49;
     for (n = 0; n < 48; n += 2) {
       c0 = s[0] ^ s[10] ^ s[20] ^ s[30] ^ s[40];
@@ -16332,8 +16332,8 @@ j.getBCHDigit(j.G18);)c^=j.G18<<j.getBCHDigit(c)-j.getBCHDigit(j.G18);return a<<
             setTimeout(function() {
                 var key = bip32ExtendedKey.derive(index);
                 var address;
-                if (!network.ethereum) {
-                    address = key.getAddress().toString();
+                if (!network.ethereum) { 
+                    address = key.getAddress().toString();                
                 }
                 else {
                     var pubData = new bitcoin.ECKey(key.privKey.d, false).pub.toHex();
@@ -16410,7 +16410,7 @@ j.getBCHDigit(j.G18);)c^=j.G18<<j.getBCHDigit(c)-j.getBCHDigit(j.G18);return a<<
         // Elements
         var indexCell = row.find(".index span");
         var addressCell = row.find(".address a");
-        var pubkeyCell = row.find(".pubkey span");
+        var pubkeyCell = row.find(".pubkey a");
         var privkeyCell = row.find(".privkey a");
         // Content
         var indexText = derivationPath + "/" + index;
@@ -16418,8 +16418,9 @@ j.getBCHDigit(j.G18);)c^=j.G18<<j.getBCHDigit(c)-j.getBCHDigit(j.G18);return a<<
         addressCell.text(address);
         addressCell.on("click",createQR);
         pubkeyCell.text(pubkey);
+        pubkeyCell.on("click",createQR);
         privkeyCell.text(privkey);
-        privkeyCell.on("click",createQR)
+        privkeyCell.on("click",createQR);
         // Visibility
         if (!showIndex) {
             indexCell.addClass("invisible");
@@ -16499,7 +16500,7 @@ j.getBCHDigit(j.G18);)c^=j.G18<<j.getBCHDigit(c)-j.getBCHDigit(j.G18);return a<<
 
 
     function populateNetworkSelect() {
-        networks = networks.sort(function(a,b) {return (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0);} );
+        networks = networks.sort(function(a,b) {return (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0);} ); 
 
         for (var i=0; i<networks.length; i++) {
             var network = networks[i];
